@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 56" role="img" aria-label="Shajons Facility Management">
+<g transform="translate(0,4)">
+<rect width="48" height="48" fill="#0B2545"/>
+<path d="M33 13H21a6 6 0 0 0 0 12h6a6 6 0 0 1 0 12H14" fill="none" stroke="#FFFFFF" stroke-width="4.6" stroke-linecap="square" stroke-linejoin="round"/>
+<rect x="9" y="41.5" width="30" height="2.4" fill="#D9A441"/>
+<rect x="35" y="8" width="4" height="9" fill="#D9A441"/>
+</g>
+<text x="62" y="32" font-family="Georgia,'Times New Roman',serif" font-size="28" font-weight="700" letter-spacing="2" fill="#0B2545">SHAJONS</text>
+<text x="63" y="49" font-family="Arial,Helvetica,sans-serif" font-size="10.5" letter-spacing="3.6" fill="#B98425">FACILITY MANAGEMENT</text>
+</svg>
