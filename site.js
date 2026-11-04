@@ -18,32 +18,47 @@
   var yr = document.getElementById('yr');
   if (yr) yr.textContent = new Date().getFullYear();
 
-  var form = document.getElementById('enquiry');
-  if (!form) return;
-  var msg = document.getElementById('msg');
   var live = /(^|\.)shajons\.com$/.test(location.hostname) || /\.netlify\.app$/.test(location.hostname);
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var name = form.elements['name'].value.trim();
-    var email = form.elements['email'].value.trim();
-    if (!name || !/\S+@\S+\.\S+/.test(email)) {
-      msg.textContent = 'Please enter your name and a valid email address.';
-      return;
-    }
-    if (!live) {
-      msg.textContent = 'Preview only: the form sends enquiries once the site is live on shajons.com.';
-      return;
-    }
-    var body = new URLSearchParams(new FormData(form)).toString();
-    msg.textContent = 'Sending...';
-    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body })
-      .then(function (r) {
-        if (!r.ok) throw new Error('bad status');
-        form.reset();
-        msg.textContent = 'Thank you. Your enquiry has been received and a member of our team will respond shortly.';
-      })
-      .catch(function () {
-        msg.textContent = 'Sorry, we could not send your enquiry. Please try again in a moment.';
+  var forms = document.querySelectorAll('form[data-netlify]');
+  Array.prototype.forEach.call(forms, function (form) {
+    var msg = form.querySelector('.msg') || document.getElementById('msg');
+    var okText = form.name === 'candidate' ? 'Thank you. Your application and CV have been received. Our recruiters will contact you when a suitable role opens.'
+      : form.name === 'employer' ? 'Thank you. Your hiring request has been received and a recruiter will contact you shortly.'
+      : 'Thank you. Your enquiry has been received and a member of our team will respond shortly.';
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var emailEl = form.querySelector('input[type=email]');
+      var nameEl = form.querySelector('input[name=name], input[id$="-name"]');
+      var missing = Array.prototype.some.call(form.querySelectorAll('[required]'), function (el) {
+        return el.type === 'checkbox' ? !el.checked : !String(el.value || '').trim();
       });
+      if (missing || (emailEl && !/\S+@\S+\.\S+/.test(emailEl.value.trim()))) {
+        msg.textContent = 'Please complete the required fields (*) and enter a valid email address.';
+        return;
+      }
+      var fileEl = form.querySelector('input[type=file]');
+      if (fileEl && fileEl.files[0] && fileEl.files[0].size > 8 * 1024 * 1024) {
+        msg.textContent = 'Your file is larger than 8 MB. Please upload a smaller CV.';
+        return;
+      }
+      if (!live) {
+        msg.textContent = 'Preview only: the form sends once the site is live on shajons.com.';
+        return;
+      }
+      var data = new FormData(form);
+      var opts = { method: 'POST' };
+      if (fileEl) { opts.body = data; }
+      else { opts.headers = { 'Content-Type': 'application/x-www-form-urlencoded' }; opts.body = new URLSearchParams(data).toString(); }
+      msg.textContent = 'Sending...';
+      fetch('/', opts)
+        .then(function (r) {
+          if (!r.ok) throw new Error('bad status');
+          form.reset();
+          msg.textContent = okText;
+        })
+        .catch(function () {
+          msg.textContent = 'Sorry, we could not send this. Please try again in a moment, or message us on WhatsApp.';
+        });
+    });
   });
 })();
