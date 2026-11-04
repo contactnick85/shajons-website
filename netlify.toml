@@ -1,2 +1,7 @@
 [build]
   publish = "."
+
+[[redirects]]
+  from = "/educational-consultancy.html"
+  to = "/education-advisory.html"
+  status = 301

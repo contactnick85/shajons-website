@@ -428,3 +428,72 @@ form.enq .msg{font-size:var(--t-small);color:var(--blue);min-height:22px}
 #candidates .two,#employers .two{align-items:start}
 @media (max-width:1020px){.promo{grid-template-columns:120px minmax(0,1fr)}.promo-go{grid-column:1/-1;text-align:center}.pos-pill{margin:6px 0 0}}
 @media (max-width:640px){.promo{grid-template-columns:minmax(0,1fr);padding:16px}.promo-img img{height:150px}.chk-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* ===== Unified typography: one family, one body size for all running text ===== */
+.prose p,.prose p:first-child,.founder .prose p:first-child{font-size:var(--t-body);font-weight:400;color:var(--text);line-height:1.7}
+.cat p,.cat li,.tiles span,.steps p,.faq p,.svc-card p,.sec-head p,.compare p,.strip span,.checks li,.promo-text>span:last-child,.shot figcaption small,.contact dd,footer .about p,.who>span,.dom p,.dom li,.form-intro .note-b{font-size:var(--t-body);font-weight:400;line-height:1.65}
+.checks li{color:var(--ink)}
+.steps h3,.cat h3,.dom h3{font-size:var(--t-h3);font-weight:800}
+.tiles b,.strip b{font-size:var(--t-body);font-weight:800}
+.sec-head p{color:var(--muted)}
+.hero .lede,.pagehead p.lede{font-size:var(--t-lede);font-weight:400;line-height:1.65}
+.btn,button,input,select,textarea{font-family:var(--font)}
+
+/* ===== Navigation and dropdown ===== */
+nav.links .dd-menu a{color:var(--ink);padding:11px 14px;border-radius:10px;font-weight:600;display:block}
+nav.links .dd-menu a:hover{background:var(--soft);color:var(--blue)}
+@media (max-width:1020px){
+  nav.links.open{background:#06183A;border-bottom:3px solid var(--sun)}
+  nav.links.open a{color:#fff}
+  nav.links.open .dd-menu{background:transparent;padding:0 0 0 12px}
+  nav.links .dd-menu a,nav.links.open .dd-menu a{color:#C9D3EA;border-bottom:1px solid rgba(255,255,255,.12)!important;padding:13px 8px;border-radius:0;font-weight:500}
+  nav.links.open .btn{color:var(--ink)}
+}
+
+/* ===== Hero service stack ===== */
+.svc-stack{position:absolute;right:-14px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:2}
+.svc-stack a{display:flex;align-items:center;gap:10px;background:#fff;color:var(--ink);font-size:var(--t-small);font-weight:700;padding:8px 18px 8px 8px;border-radius:99px;box-shadow:0 12px 26px rgba(5,10,40,.3);text-decoration:none;white-space:nowrap;transition:transform .15s}
+.svc-stack a:hover{transform:translateX(-4px)}
+.svc-stack i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;background:var(--acc);flex:none}
+.svc-stack svg{width:16px;height:16px}
+@media (max-width:1020px){.svc-stack{position:static;transform:none;flex-direction:row;flex-wrap:wrap;margin-top:14px}.hero .wrap{gap:28px}}
+
+/* ===== Home pills ===== */
+.pill-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+.pill{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink);border-radius:99px;padding:12px 24px 12px 12px;background:var(--acc-soft);border:1.5px solid var(--acc);transition:transform .2s,box-shadow .2s}
+.pill:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(6,24,58,.15)}
+.pill i{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--acc);color:#fff;flex:none}
+.pill i svg{width:22px;height:22px}
+.pill span{display:flex;flex-direction:column;min-width:0;flex:1}
+.pill b{font-size:var(--t-body);font-weight:800;color:var(--ink)}
+.pill small{font-size:var(--t-small);color:var(--muted)}
+.pill em{font-style:normal;font-weight:800;color:var(--acc-d);font-size:var(--t-h3)}
+.pill-profile{--acc:#0A2A5C;--acc-soft:#E6ECF7;border-color:#0A2A5C;background:linear-gradient(120deg,#E6ECF7,#FFF3CF)}
+@media (max-width:640px){.pill-row{grid-template-columns:minmax(0,1fr)}}
+
+/* ===== Region, chips, domains ===== */
+.chips.big{gap:10px}
+.chips.big span{font-size:var(--t-body);padding:10px 18px;background:var(--blue-soft);color:var(--blue);font-weight:700}
+.dom-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.dom{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px;border-top:4px solid var(--acc)}
+.dom:nth-child(4n+2){--acc:var(--blue)} .dom:nth-child(4n+3){--acc:var(--silver)} .dom:nth-child(4n+4){--acc:var(--sun)}
+.dom h3{margin-bottom:8px}
+.dom p{color:var(--muted);margin-bottom:14px}
+.dom ul{display:flex;flex-wrap:wrap;gap:8px}
+.dom li{font-size:var(--t-small);font-weight:600;background:var(--soft);color:var(--ink);padding:5px 12px;border-radius:99px}
+@media (max-width:760px){.dom-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* POS pill on home */
+.pill-pos{grid-column:1/-1;padding:10px 26px 10px 10px}
+.pill-img{flex:none!important;width:92px}
+.pill-img img{display:block;width:92px;height:58px;object-fit:cover;border-radius:99px;background:#D8F5E9}
+.pill-pos b{font-size:var(--t-h3)}
+.pill-pos{background:linear-gradient(120deg,#D8F5E9,#fff 85%)}
+
+/* smaller hero service pills */
+.svc-stack{gap:7px;right:-12px}
+.svc-stack a{font-size:12.5px;padding:5px 14px 5px 5px;gap:8px;box-shadow:0 8px 18px rgba(5,10,40,.28)}
+.svc-stack i{width:22px;height:22px}
+.svc-stack svg{width:12px;height:12px}
+.pos-pill{padding:6px 12px!important;font-size:13px!important}
+.pos-pill em{display:none}

@@ -1,4 +1,15 @@
 (function () {
+  // Swap in live Tablyvio screenshots when reachable; bundled placeholders stay otherwise.
+  Array.prototype.forEach.call(document.querySelectorAll('img[data-remote]'), function (img) {
+    function tryLoad(urls) {
+      if (!urls.length) return;
+      var t = new Image();
+      t.onload = function () { img.src = t.src; };
+      t.onerror = function () { tryLoad(urls.slice(1)); };
+      t.src = urls[0];
+    }
+    tryLoad([img.getAttribute('data-remote'), img.getAttribute('data-remote2')].filter(Boolean));
+  });
   var nav = document.getElementById('nav');
   var btn = document.getElementById('menu');
   if (nav && btn) {
@@ -24,7 +35,7 @@
     var msg = form.querySelector('.msg') || document.getElementById('msg');
     var okText = form.name === 'candidate' ? 'Thank you. Your application and CV have been received. Our recruiters will contact you when a suitable role opens.'
       : form.name === 'employer' ? 'Thank you. Your hiring request has been received and a recruiter will contact you shortly.'
-      : 'Thank you. Your enquiry has been received and a member of our team will respond shortly.';
+      : 'Thank you. Your inquiry has been received and a member of our team will respond shortly.';
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var emailEl = form.querySelector('input[type=email]');
