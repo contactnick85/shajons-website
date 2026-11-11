@@ -30,7 +30,7 @@
   if (yr) yr.textContent = new Date().getFullYear();
 
   var live = /(^|\.)shajons\.com$/.test(location.hostname) || /\.netlify\.app$/.test(location.hostname);
-  var forms = document.querySelectorAll('form[data-netlify]');
+  var forms = document.querySelectorAll('form.enq');
   Array.prototype.forEach.call(forms, function (form) {
     var msg = form.querySelector('.msg') || document.getElementById('msg');
     var okText = form.name === 'candidate' ? 'Thank you. Your application and CV have been received. Our recruiters will contact you when a suitable role opens.'
