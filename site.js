@@ -48,27 +48,49 @@
         return;
       }
       var fileEl = form.querySelector('input[type=file]');
-      if (fileEl && fileEl.files[0] && fileEl.files[0].size > 8 * 1024 * 1024) {
-        msg.textContent = 'Your file is larger than 8 MB. Please upload a smaller CV.';
+      var file = fileEl && fileEl.files[0];
+      if (file && file.size > 4 * 1024 * 1024) {
+        msg.textContent = 'Your file is larger than 4 MB. Please upload a smaller CV (PDF or Word).';
         return;
       }
       if (!live) {
         msg.textContent = 'Preview only: the form sends once the site is live on shajons.com.';
         return;
       }
-      var data = new FormData(form);
-      var opts = { method: 'POST' };
-      if (fileEl) { opts.body = data; }
-      else { opts.headers = { 'Content-Type': 'application/x-www-form-urlencoded' }; opts.body = new URLSearchParams(data).toString(); }
+      var fields = {};
+      new FormData(form).forEach(function (v, k) {
+        if (v instanceof File) return;
+        if (fields[k] === undefined) fields[k] = v;
+        else fields[k] = [].concat(fields[k], v);
+      });
+      var formName = (fields['form-name'] || form.name || 'inquiry');
+      function readFile(f) {
+        return new Promise(function (res, rej) {
+          if (!f) return res(null);
+          var fr = new FileReader();
+          fr.onload = function () { res({ name: f.name, data: String(fr.result).split(',')[1] }); };
+          fr.onerror = rej;
+          fr.readAsDataURL(f);
+        });
+      }
       msg.textContent = 'Sending...';
-      fetch('/', opts)
+      readFile(file)
+        .then(function (resume) {
+          return fetch('/.netlify/functions/send-form', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ form: formName, fields: fields, resume: resume })
+          });
+        })
         .then(function (r) {
           if (!r.ok) throw new Error('bad status');
+          // Keep a text-only copy in Netlify Forms as a backup record (CV is not re-sent).
+          try { fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(Object.assign({}, fields, { 'form-name': formName })).toString() }); } catch (x) {}
           form.reset();
           msg.textContent = okText;
         })
         .catch(function () {
-          msg.textContent = 'Sorry, we could not send this. Please try again in a moment, or message us on WhatsApp.';
+          msg.textContent = 'Sorry, we could not send this. Please try again in a moment, or email john@shajons.com or message us on WhatsApp.';
         });
     });
   });

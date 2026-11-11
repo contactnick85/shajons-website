@@ -497,3 +497,31 @@ nav.links .dd-menu a:hover{background:var(--soft);color:var(--blue)}
 .svc-stack svg{width:12px;height:12px}
 .pos-pill{padding:6px 12px!important;font-size:13px!important}
 .pos-pill em{display:none}
+
+/* ===== Compact executive spacing ===== */
+section{padding-block:48px}
+.alt-band section{padding-block:48px}
+section:not(.alt)+section:not(.alt),.alt-band section+section{padding-top:0}
+.sec-head{margin-bottom:26px}
+.sec-head h2{margin:10px 0 10px}
+.hero .wrap{padding-block:48px;gap:40px}
+.pagehead .wrap{padding-block:36px;gap:40px}
+.hero .cta{margin-top:22px}.hero .proof{margin-top:20px}
+.two,.founder,.contact{gap:36px}
+.svc-grid{gap:18px}.cat-grid,.compare,.shots,.dom-grid{gap:16px}
+.cat,.dom,.compare .col{padding:20px}
+.tiles div,.steps li{padding:18px}
+.tab-hero{padding:30px;gap:36px}
+.ctaband{padding-block:40px}
+.gap-top{margin-top:36px}.gap-top-s{margin-top:26px}
+footer{padding-top:40px}footer .cols{padding-bottom:26px;gap:32px}
+form.enq{padding:24px;gap:14px}
+.strip .c{padding:14px 18px}
+@media (max-width:640px){section,.alt-band section{padding-block:36px}.hero .wrap{padding-block:32px}.pagehead .wrap{padding-block:28px}}
+.row{padding-block:20px}
+.row h2{margin:8px 0}
+.row .pic img{max-height:260px;width:100%;object-fit:cover}
+.row .checks{margin:10px 0 14px}
+.svc-card .body{padding:16px 20px 18px;gap:8px}
+.pagehead figure img{max-height:300px;width:100%;object-fit:cover}
+.mb{margin-bottom:8px}
